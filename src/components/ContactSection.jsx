@@ -1,4 +1,5 @@
 import {
+  Github,
   Instagram,
   Linkedin,
   Mail,
@@ -10,24 +11,73 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
 
 export const ContactSection = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    // Initialize EmailJS with the public key from Vite env vars
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    if (publicKey) {
+      try {
+        emailjs.init(publicKey);
+      } catch (err) {
+        // initialization errors are rare but log for debugging
+        console.error("EmailJS init error:", err);
+      }
+    }
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setIsSubmitting(true);
+    const form = e.target;
+    const formData = new FormData(form);
 
-    setTimeout(() => {
+    const templateParams = {
+      title: "Service Request",
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+      time: new Date().toISOString(),
+    };
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+
+    if (!serviceId || !templateId) {
+      toast({
+        title: "Configuration error",
+        description: "Email service is not configured. Please check environment variables.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+
+      await emailjs.send(serviceId, templateId, templateParams);
+
       toast({
         title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
+        description: "Thank you for your message. I will get back to you soon.",
       });
+
+      form.reset();
+    } catch (error) {
+      console.error("EmailJS send error:", error);
+      toast({
+        title: "Send failed",
+        description: "There was an error sending your message. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
   return (
     <section id="contact" className="py-24 px-4 relative bg-secondary/30">
@@ -56,10 +106,10 @@ export const ContactSection = () => {
                 <div>
                   <h4 className="font-medium"> Email</h4>
                   <a
-                    href="mailto:hello@gmail.com"
+                    href="mailto:malleshpareet360@gmail.com"
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    hello@gmail.com
+                    malleshpareet360@gmail.com
                   </a>
                 </div>
               </div>
@@ -70,10 +120,9 @@ export const ContactSection = () => {
                 <div>
                   <h4 className="font-medium"> Phone</h4>
                   <a
-                    href="tel:+11234567890"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    +1 (123) 456-7890
+                    href="tel:+91-8431893369"
+                    className="text-muted-foreground hover:text-primary transition-colors">
+                        +91 8431893369
                   </a>
                 </div>
               </div>
@@ -84,7 +133,7 @@ export const ContactSection = () => {
                 <div>
                   <h4 className="font-medium"> Location</h4>
                   <a className="text-muted-foreground hover:text-primary transition-colors">
-                    Vancouver, BC, Canada
+                    Bengaluru, Karanataka, India
                   </a>
                 </div>
               </div>
@@ -93,29 +142,25 @@ export const ContactSection = () => {
             <div className="pt-8">
               <h4 className="font-medium mb-4"> Connect With Me</h4>
               <div className="flex space-x-4 justify-center">
-                <a href="#" target="_blank">
+                <a href="https://www.linkedin.com/in/mallesh-pareet/" target="_blank">
                   <Linkedin />
                 </a>
                 <a href="#" target="_blank">
-                  <Twitter />
+                  {/* <Twitter /> */}
                 </a>
                 <a href="#" target="_blank">
-                  <Instagram />
+                  <Github />
                 </a>
-                <a href="#" target="_blank">
-                  <Twitch />
+                <a href="https://github.com/malleshpareet" target="_blank">
+                  {/* <Twitch /> */}
                 </a>
               </div>
             </div>
           </div>
 
-          <div
-            className="bg-card p-8 rounded-lg shadow-xs"
-            onSubmit={handleSubmit}
-          >
+          <div className="bg-card p-8 rounded-lg shadow-xs">
             <h3 className="text-2xl font-semibold mb-6"> Send a Message</h3>
-
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label
                   htmlFor="name"
@@ -130,7 +175,7 @@ export const ContactSection = () => {
                   name="name"
                   required
                   className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary"
-                  placeholder="Pedro Machado..."
+                  placeholder="Mallesh Pareet..."
                 />
               </div>
 
@@ -148,7 +193,7 @@ export const ContactSection = () => {
                   name="email"
                   required
                   className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary"
-                  placeholder="john@gmail.com"
+                  placeholder="mallesh@gmail.com"
                 />
               </div>
 
@@ -165,7 +210,7 @@ export const ContactSection = () => {
                   name="message"
                   required
                   className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary resize-none"
-                  placeholder="Hello, I'd like to talk about..."
+                  placeholder="Hello, I would like to talk about..."
                 />
               </div>
 
