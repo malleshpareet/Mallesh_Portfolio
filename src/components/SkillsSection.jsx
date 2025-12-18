@@ -24,9 +24,14 @@ const skills = [
   { name: "Andriod Studio", level: 95, category: "tools" },
   { name: "Intellij", level: 95, category: "tools" },
   { name: "VS Code", level: 95, category: "tools" },
+
+  // Cloud
+  { name: "AWS (S3, EC2, VPC)", level: 85, category: "cloud" },
+  { name: "AWS CI/CD (CodePipeline)", level: 80, category: "cloud" },
+  { name: "AWS Security Groups", level: 85, category: "cloud" },
 ];
 
-const categories = ["all", "frontend", "backend", "tools"];
+const categories = ["all", "frontend", "backend", "tools", "cloud"];
 
 export const SkillsSection = () => {
   const [activeCategory, setActiveCategory] = useState("all");
