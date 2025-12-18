@@ -17,10 +17,10 @@ export const AboutSection = () => {
             </h3>
 
             <p className="text-muted-foreground">
-              As a versatile fullstack developer, I bring extensive experience in web and mobile
-              development. I specialize in building end-to-end solutions from robust backend
-              systems to engaging front-end experiences, including native mobile applications
-              for both iOS and Android platforms.
+              I craft exceptional digital experiences across web and mobile
+              platforms. As a fullstack developer, I build powerful end-to-end
+              solutions that seamlessly integrate web, iOS, and Android
+              technologies.
             </p>
 
             <p className="text-muted-foreground">
