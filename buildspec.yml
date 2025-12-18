@@ -13,6 +13,13 @@ phases:
       - echo Building the React app...
       - npm run build
 
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Listing 'dist' directory contents...
+      - ls -la dist
+
+
 artifacts:
   files:
     - '**/*'
