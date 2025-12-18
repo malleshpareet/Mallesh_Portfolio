@@ -70,7 +70,7 @@ export const AboutSection = () => {
                   <h4 className="font-semibold text-lg">Mobile Development</h4>
                   <p className="text-muted-foreground">
                     Creating native iOS and Android applications using Swift,
-                    Kotlin, and cross-platform frameworks.
+                    Flutter, and cross-platform frameworks.
                   </p>
                 </div>
               </div>
@@ -84,8 +84,8 @@ export const AboutSection = () => {
                 <div className="text-left">
                   <h4 className="font-semibold text-lg">System Architecture</h4>
                   <p className="text-muted-foreground">
-                    Designing scalable architectures and implementing efficient
-                    backend solutions.
+                    Deep expertise in Low-Level Design (LLD) and intermediate
+                    process in High-Level Design (HLD) for scalable systems.
                   </p>
                 </div>
               </div>
