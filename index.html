@@ -1,28 +1,30 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="" href="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mallesh Portfolio</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script>
-      // Default to dark theme unless user explicitly chose light
-      try {
-        const theme = localStorage.getItem('theme');
-        if (theme === 'light') {
-          // keep light
-        } else {
-          document.documentElement.classList.add('dark');
-          // if no explicit theme saved, set it to dark so preference persists
-          if (!theme) localStorage.setItem('theme', 'dark');
-        }
-      } catch (e) {
-        // ignore storage errors
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mallesh Portfolio</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script>
+    // Default to dark theme unless user explicitly chose light
+    try {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'light') {
+        // keep light
+      } else {
+        document.documentElement.classList.add('dark');
+        // if no explicit theme saved, set it to dark so preference persists
+        if (!theme) localStorage.setItem('theme', 'dark');
       }
-    </script>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    } catch (e) {
+      // ignore storage errors
+    }
+  </script>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
