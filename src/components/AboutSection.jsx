@@ -1,5 +1,5 @@
 import { Briefcase, Code, User } from "lucide-react";
-import cvPdf from "@/assets/Mallesh_Pareet (3).pdf";
+import cvPdf from "@/assets/Mallesh_Pareet (4).pdf";
 
 export const AboutSection = () => {
   return (

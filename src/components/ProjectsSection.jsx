@@ -44,6 +44,17 @@ const projects = [
     githubUrl: "#",
     span: "col-span-1 md:col-span-2 row-span-1",
   },
+  {
+    id: 4,
+    title: "Evalo AI",
+    description:
+      "AI-powered upskilling platform that unlocks your professional potential with intelligent insights. 1,000+ users with a 95% success rate.",
+    image: "/projects/image copy.png",
+    tags: ["AI", "React", "Upskilling"],
+    demoUrl: "https://evalo-ai-user.irpinnovative.com/login",
+    githubUrl: "#",
+    span: "col-span-1 row-span-1",
+  },
 ];
 
 export const ProjectsSection = () => {

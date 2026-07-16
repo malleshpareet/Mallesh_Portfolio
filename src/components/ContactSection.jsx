@@ -5,80 +5,9 @@ import {
   Mail,
   MapPin,
   Phone,
-  Send,
-  Twitch,
-  Twitter,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
-import { useState, useEffect } from "react";
-import emailjs from "@emailjs/browser";
 
 export const ContactSection = () => {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    // Initialize EmailJS with the public key from Vite env vars
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-    if (publicKey) {
-      try {
-        emailjs.init(publicKey);
-      } catch (err) {
-        // initialization errors are rare but log for debugging
-        console.error("EmailJS init error:", err);
-      }
-    }
-  }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const form = e.target;
-    const formData = new FormData(form);
-
-    const templateParams = {
-      title: "Service Request",
-      name: formData.get("name"),
-      email: formData.get("email"),
-      message: formData.get("message"),
-      time: new Date().toISOString(),
-    };
-
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-
-    if (!serviceId || !templateId) {
-      toast({
-        title: "Configuration error",
-        description: "Email service is not configured. Please check environment variables.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    try {
-      setIsSubmitting(true);
-
-      await emailjs.send(serviceId, templateId, templateParams);
-
-      toast({
-        title: "Message sent!",
-        description: "Thank you for your message. I will get back to you soon.",
-      });
-
-      form.reset();
-    } catch (error) {
-      console.error("EmailJS send error:", error);
-      toast({
-        title: "Send failed",
-        description: "There was an error sending your message. Please try again later.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
   return (
     <section id="contact" className="py-24 px-4 relative bg-secondary/30">
       <div className="container mx-auto max-w-5xl">
@@ -152,73 +81,37 @@ export const ContactSection = () => {
             </div>
           </div>
 
-          <div className="bg-card p-8 rounded-lg shadow-xs">
-            <h3 className="text-2xl font-semibold mb-6"> Send a Message</h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium mb-2"
-                >
-                  {" "}
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary"
-                  placeholder="Mallesh Pareet..."
-                />
-              </div>
+          {/* WhatsApp Card */}
+          <div className="bg-card p-8 rounded-2xl shadow-md border border-border/50 flex flex-col items-center justify-center text-center gap-6">
+            <div className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg"
+              style={{ background: "linear-gradient(135deg, #25D366, #128C7E)" }}>
+              {/* WhatsApp SVG */}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="white" className="w-10 h-10">
+                <path d="M16.003 2.667C8.637 2.667 2.667 8.637 2.667 16c0 2.347.638 4.638 1.848 6.638L2.667 29.333l6.862-1.799A13.27 13.27 0 0 0 16.003 29.333C23.37 29.333 29.333 23.363 29.333 16S23.37 2.667 16.003 2.667zm0 24.267a11.022 11.022 0 0 1-5.62-1.538l-.403-.239-4.072 1.068 1.086-3.966-.263-.416A10.99 10.99 0 0 1 5.06 16c0-6.042 4.902-10.933 10.943-10.933S26.94 9.958 26.94 16c0 6.034-4.895 10.934-10.937 10.934zm6.004-8.189c-.328-.165-1.943-.958-2.244-1.068-.3-.11-.519-.165-.737.165-.22.328-.848 1.068-1.04 1.287-.191.22-.383.247-.711.082-.328-.165-1.387-.511-2.641-1.628-.976-.87-1.636-1.944-1.827-2.272-.191-.328-.02-.505.144-.668.147-.146.328-.383.492-.574.164-.191.219-.328.328-.547.11-.22.055-.41-.027-.574-.082-.165-.737-1.777-1.01-2.434-.265-.636-.537-.549-.737-.559l-.628-.011c-.22 0-.574.082-.875.41-.3.328-1.147 1.122-1.147 2.735s1.174 3.173 1.338 3.392c.164.22 2.31 3.528 5.597 4.945.782.338 1.393.54 1.869.691.785.25 1.5.215 2.065.13.63-.094 1.943-.794 2.216-1.561.274-.765.274-1.42.192-1.558-.082-.137-.3-.22-.628-.383z"/>
+              </svg>
+            </div>
 
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium mb-2"
-                >
-                  {" "}
-                  Your Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary"
-                  placeholder="mallesh@gmail.com"
-                />
-              </div>
+            <div>
+              <h3 className="text-2xl font-bold mb-2">Chat on WhatsApp</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed max-w-xs mx-auto">
+                Want to connect instantly? Click the button below and send me a message directly on WhatsApp.
+              </p>
+            </div>
 
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium mb-2"
-                >
-                  {" "}
-                  Your Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary resize-none"
-                  placeholder="Hello, I would like to talk about..."
-                />
-              </div>
+            <a
+              href="https://wa.me/918431893369?text=Hi%20Mallesh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-semibold text-base shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
+              style={{ background: "linear-gradient(135deg, #25D366, #128C7E)", boxShadow: "0 4px 24px rgba(37,211,102,0.35)" }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="white" className="w-5 h-5">
+                <path d="M16.003 2.667C8.637 2.667 2.667 8.637 2.667 16c0 2.347.638 4.638 1.848 6.638L2.667 29.333l6.862-1.799A13.27 13.27 0 0 0 16.003 29.333C23.37 29.333 29.333 23.363 29.333 16S23.37 2.667 16.003 2.667zm0 24.267a11.022 11.022 0 0 1-5.62-1.538l-.403-.239-4.072 1.068 1.086-3.966-.263-.416A10.99 10.99 0 0 1 5.06 16c0-6.042 4.902-10.933 10.943-10.933S26.94 9.958 26.94 16c0 6.034-4.895 10.934-10.937 10.934zm6.004-8.189c-.328-.165-1.943-.958-2.244-1.068-.3-.11-.519-.165-.737.165-.22.328-.848 1.068-1.04 1.287-.191.22-.383.247-.711.082-.328-.165-1.387-.511-2.641-1.628-.976-.87-1.636-1.944-1.827-2.272-.191-.328-.02-.505.144-.668.147-.146.328-.383.492-.574.164-.191.219-.328.328-.547.11-.22.055-.41-.027-.574-.082-.165-.737-1.777-1.01-2.434-.265-.636-.537-.549-.737-.559l-.628-.011c-.22 0-.574.082-.875.41-.3.328-1.147 1.122-1.147 2.735s1.174 3.173 1.338 3.392c.164.22 2.31 3.528 5.597 4.945.782.338 1.393.54 1.869.691.785.25 1.5.215 2.065.13.63-.094 1.943-.794 2.216-1.561.274-.765.274-1.42.192-1.558-.082-.137-.3-.22-.628-.383z"/>
+              </svg>
+              Message on WhatsApp
+            </a>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={cn(
-                  "cosmic-button w-full flex items-center justify-center gap-2"
-                )}
-              >
-                {isSubmitting ? "Sending..." : "Send Message"}
-                <Send size={16} />
-              </button>
-            </form>
+
           </div>
         </div>
       </div>
